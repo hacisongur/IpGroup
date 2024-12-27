@@ -1,0 +1,123 @@
+﻿@model ProgrammersBlog.Entities.Dtos.CategoryUpdateDto
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.13/jquery.validate.unobtrusive.min.js"></script>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><span class="fas fa-edit"></span> @Model.Name Adlı Kategori Düzenleniyor...</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="İptal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Update" id="form-category-update">
+                    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+                    <div asp-validation-summary="All" class="text-danger" id="validation-summary" aria-hidden="true" style="display: none;"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <input class="form-control" asp-for="Name" />
+                        <span class="text-danger" asp-validation-for="Name"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description"></label>
+                        <input class="form-control" asp-for="Description" />
+                        <span class="text-danger" asp-validation-for="Description"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Oda"></label>
+                        <input class="form-control" asp-for="Oda" />
+                        <span class="text-danger" asp-validation-for="Oda"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="IpNo"></label>
+                        <input class="form-control" asp-for="IpNo" id="IpNo"
+                               pattern="^(\d{1,3}\.){3}\d{1,3}$"
+                               placeholder="192.168.100.100"
+                               title="Geçerli bir IP adresi girin (örn. 192.168.100.100)" />
+                        <span class="text-danger" asp-validation-for="IpNo"></span>
+                        <span class="text-danger" id="IpNoValidationMessage"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="PcAdi"></label>
+                        <input class="form-control" asp-for="PcAdi" />
+                        <span class="text-danger" asp-validation-for="PcAdi"></span>
+                    </div>
+                   <div class="form-group">
+                      <label asp-for="Bina"></label>
+                        @{
+                            var binalar = new List<string> {
+                        "Ana Hizmet Binası",
+                        "Ek Hizmet Binası",
+                        "Makine İkmal",
+                        "Zabıta Müdürlüğü"
+                        };
+                        }
+
+                        <select class="form-control" id="Bina" name="Bina">
+                            <option value="">Seçiniz...</option>
+                            @foreach (var bina in binalar)
+                            {
+                                <option value="@bina" selected="@(Model.Bina == bina ? "selected" : null)">@bina</option>
+                            }
+                        </select>
+                  <span class="text-danger" asp-validation-for="Bina"></span>
+                  </div>
+
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" asp-for="IsActive" />
+                        <label asp-for="IsActive" class="form-check-label"></label>
+                        <span class="text-danger" asp-validation-for="IsActive"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" asp-for="IsDeleted" />
+                        <label asp-for="IsDeleted" class="form-check-label"></label>
+                        <span class="text-danger" asp-validation-for="IsDeleted"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-block" data-dismiss="modal"><span class="fas fa-times"></span> İptal</button>
+                <button type="button" class="btn btn-primary btn-block" id="btnUpdate"><span class="fas fa-save"></span> Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+        $(document).on("blur", "#IpNo", function () {
+            var ipNo = $(this).val();
+            if (ipNo === "") {
+                $("#IpNoValidationMessage").text("IP adresi boş bırakılamaz.");
+                $("#btnUpdate").prop("disabled", true);
+                return;
+            }
+
+            $.ajax({
+                url: '/Admin/Category/IsIpNoUnique',
+                type: 'GET',
+                data: { ipNo: ipNo },
+                success: function (response) {
+                    if (!response.isUnique) {
+                        $("#IpNoValidationMessage").text("Bu IP adresi zaten kayıtlı.");
+                        $("#btnUpdate").prop("disabled", true);
+                    } else {
+                        $("#IpNoValidationMessage").text("");
+                        $("#btnUpdate").prop("disabled", false);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Hatası:", error);
+                    console.error("Sunucu Yanıtı:", xhr.responseText);
+                    $("#IpNoValidationMessage").text("Sunucudan geçerli bir yanıt alınamadı.");
+                    $("#btnUpdate").prop("disabled", true);
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,49 @@
+﻿@model ProgrammersBlog.Mvc.Areas.Admin.Models.UserWithRolesViewModel
+<div id="layoutSidenav_nav">
+    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+        <div class="sb-sidenav-menu">
+            <div class="nav">
+                <div class="sb-sidenav-menu-heading">MENÜ</div>
+                <a class="nav-link" asp-area="Admin" asp-controller="Home" asp-action="Index">
+                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    Yönetim Paneli
+                </a>
+                <div class="sb-sidenav-menu-heading">İçerikler</div>
+                <a class="nav-link" asp-area="Admin" asp-controller="Category" asp-action="Index">
+                    <div class="sb-nav-link-icon"><i class="fas fa-network-wired"></i></div>
+                    İp Grubu
+                </a>
+                <a class="nav-link" asp-area="Admin" asp-controller="HizmetBinasi" asp-action="Index">
+                    <div class="sb-nav-link-icon"><i class="fas fa-building"></i></div>
+                    Ana Hizmet Binası
+                </a>
+                <a class="nav-link" asp-area="Admin" asp-controller="EkHizmetBinasi" asp-action="Index">
+                    <div class="sb-nav-link-icon"><i class="fas fa-warehouse"></i></div>
+                    Ek Hizmet Binası
+                </a>
+                <a class="nav-link" asp-area="Admin" asp-controller="MakineIkmal" asp-action="Index">
+                    <div class="sb-nav-link-icon"><i class="fas fa-tools"></i></div>
+                    Makine İkmal
+                </a>
+                <a class="nav-link" asp-area="Admin" asp-controller="ZabitaMudurlugu" asp-action="Index">
+                    <div class="sb-nav-link-icon"><i class="fas fa-shield-alt"></i></div>
+                    Zabıta Müdürlüğü
+                </a>
+
+                @if (Model.Roles.Any(r=>r.Equals("Admin")))
+                {
+                    <div class="sb-sidenav-menu-heading">Kullanıcılar</div>
+                    <a class="nav-link" asp-area="Admin" asp-controller="User" asp-action="Index">
+                        <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                        Kullanıcılar
+                    </a>
+                }
+                
+            </div>
+        </div>
+        <div class="sb-sidenav-footer">
+            <div class="small">Giriş Yapan Kullanıcı:</div>
+           @Model.User.UserName
+        </div>
+    </nav>
+</div>

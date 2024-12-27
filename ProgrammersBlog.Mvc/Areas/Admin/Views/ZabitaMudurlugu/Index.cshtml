@@ -1,0 +1,126 @@
+﻿@model ProgrammersBlog.Entities.Dtos.CategoryListDto
+
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "Zabıta Müdürlüğü";
+}
+
+<ol class="breadcrumb mb-3 mt-2">
+    <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">Admin</a></li>
+    <li class="breadcrumb-item active"><a asp-area="Admin" asp-controller="ZabitaMudurlugu" asp-action="Index">Zabıta Müdürlüğü</a></li>
+</ol>
+
+@if (Model != null && Model.Categories != null && Model.Categories.Any())
+{
+    <div class="card mb-4 mt-2">
+        <div class="card-header">
+            <i class="fas fa-table mr-1"></i>
+            Zabıta Müdürlüğü
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="categoriesTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Adı Soyadı</th>
+                            <th>Birim</th>
+                            <th>Oda</th>
+                            <th>İp No</th>
+                            <th>Pc Adı</th>
+                            <th>Bina</th>
+                            <th>Aktif Mi?</th>
+                            <th>Silinmiş Mi?</th>
+                            <th>Oluşturulma Tarihi</th>
+                            <th>Oluşturan Kişi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var category in Model.Categories)
+                        {
+                            <tr>
+                                <td>@category.Id</td>
+                                <td>@category.Name</td>
+                                <td>@category.Description</td>
+                                <td>@category.Oda</td>
+                                <td>@category.IpNo</td>
+                                <td>@category.PcAdi</td>
+                                <td>@category.Bina</td>
+                                <td>@(category.IsActive ? "Evet" : "Hayır")</td>
+                                <td>@(category.IsDeleted ? "Evet" : "Hayır")</td>
+                                <td>@category.CreatedDate.ToShortDateString()</td>
+                                <td>@category.CreatedByName</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-warning mt-3">
+        Hiç kategori bulunamadı.
+    </div>
+}
+
+<style>
+    /* Hover efekti için turkuaz arka plan */
+    #categoriesTable tbody tr:hover {
+        background-color: #E0F7FA; /* Turkuaz renk */
+    }
+
+    /* Tablo başlıkları için özel stil */
+    #categoriesTable thead th {
+        background-color: #00796B; /* Daha koyu turkuaz */
+        color: white;
+        text-align: center;
+    }
+</style>
+
+@section Scripts
+{
+    <!-- DataTables JS ve Buttons JS -->
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.bootstrap5.min.js"></script>
+
+    <!-- Excel ve PDF için eklentiler -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#categoriesTable').DataTable({
+                paging: true, // Sayfalama aktif
+                searching: true, // Arama aktif
+                ordering: true, // Sıralama aktif
+                info: true, // Tablo bilgisi aktif
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/tr.json" // Türkçe dil desteği
+                },
+                dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>' + // "Sayfada X kayıt göster" ve arama kutusu
+                    '<"row"<"col-sm-12 text-center"B>>' + // Ortalanmış butonlar
+                    '<"row"<"col-sm-12"tr>>' + // Tablo
+                    '<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>', // Bilgi ve sayfalama
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        text: 'Excel Olarak İndir',
+                        className: 'btn btn-success btn-sm'
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'PDF Olarak İndir',
+                        className: 'btn btn-info btn-sm'
+                    }
+                ],
+                lengthMenu: [[10, 25, 50, 100, 200], [10, 25, 50, 100, 200]], // Kullanıcı seçenekleri
+                pageLength: 10 // Varsayılan olarak gösterilecek satır sayısı
+            });
+        });
+    </script>
+}
