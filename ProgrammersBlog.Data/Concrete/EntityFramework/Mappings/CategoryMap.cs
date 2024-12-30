@@ -17,7 +17,6 @@ namespace ProgrammersBlog.Data.Concrete.EntityFramework.Mappings
             builder.Property(c => c.Oda).HasMaxLength(500);
             builder.Property(c => c.IpNo).IsRequired();
             builder.Property(c => c.IpNo).HasMaxLength(16);
-            builder.HasIndex(c => c.IpNo).IsUnique();
             builder.Property(c => c.PcAdi).IsRequired();
             builder.Property(c => c.PcAdi).HasMaxLength(500);
             builder.Property(c => c.Bina).HasMaxLength(500);

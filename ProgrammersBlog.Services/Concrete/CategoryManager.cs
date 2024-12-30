@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using ProgrammersBlog.Data.Abstract;
@@ -111,14 +108,7 @@ namespace ProgrammersBlog.Services.Concrete
             }
             return new DataResult<CategoryListDto>(ResultStatus.Error, Messages.Category.NotFound(isPlural: true), null);
         }
-        public async Task<bool> IsIpNoUniqueAsync(string ipNo)
-        {
-            Console.WriteLine($"Kontrol edilen IP: {ipNo}");
-            var category = await _unitOfWork.Categories.GetAsync(c => c.IpNo == ipNo);
-            var isUnique = category == null;
-            Console.WriteLine($"Benzersiz mi: {isUnique}");
-            return isUnique;
-        }
+    
 
         public async Task<IDataResult<CategoryDto>> AddAsync(CategoryAddDto categoryAddDto, string createdByName)
         {

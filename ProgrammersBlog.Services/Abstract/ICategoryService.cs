@@ -25,7 +25,6 @@ namespace ProgrammersBlog.Services.Abstract
         Task<IDataResult<int>> CountAsync();
         Task<IDataResult<int>> CountByNonDeletedAsync();
         Task<IDataResult<int>> GetCategoryCountByBinaAsync(string bina);
-        Task<bool> IsIpNoUniqueAsync(string ipNo);
 
 
     }

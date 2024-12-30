@@ -1,5 +1,4 @@
 ﻿
-using ProgrammersBlog.Entities.Concrete;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ProgrammersBlog.Data.Abstract;
@@ -34,8 +30,6 @@ namespace ProgrammersBlog.Services.Extensions
             }).AddEntityFrameworkStores<ProgrammersBlogContext>();
             serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
             serviceCollection.AddScoped<ICategoryService, CategoryManager>();
-            serviceCollection.AddScoped<IArticleService, ArticleManager>();
-            serviceCollection.AddScoped<ICommentService, CommentManager>();
             return serviceCollection;
         }
     }
