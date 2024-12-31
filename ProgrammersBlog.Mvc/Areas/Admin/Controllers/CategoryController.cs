@@ -111,6 +111,16 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
             var deletedCategory = JsonSerializer.Serialize(result.Data);
             return Json(deletedCategory);
         }
+        [HttpPost]
+        public async Task<JsonResult> HardDelete(int categoryId)
+        {
+            var result = await _categoryService.HardDeleteAsync(categoryId);
+            if (result.ResultStatus == ResultStatus.Success)
+            {
+                return Json(new { success = true, message = result.Message });
+            }
+            return Json(new { success = false, message = result.Message });
+        }
 
     }
 }

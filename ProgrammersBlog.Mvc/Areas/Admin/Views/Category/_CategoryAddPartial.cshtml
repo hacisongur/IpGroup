@@ -2,7 +2,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.13/jquery.validate.unobtrusive.min.js"></script>
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -22,12 +22,47 @@
                         <input class="form-control" asp-for="Name" />
                         <span class="text-danger" asp-validation-for="Name"></span>
                     </div>
+                     <div class="form-group">
+        <label asp-for="Description"></label>
+       <select class="form-control" asp-for="Description">
+        <option value="">Seçiniz...</option>
+        <option value="Destek Hizmetleri Md.lüğü">Destek Hizmetleri Md.lüğü</option>
+        <option value="Basın,Yayın ve Halkla İlişkiler Md.lüğü">Basın, Yayın ve Halkla İlişkiler Md.lüğü</option>
+        <option value="Temizlik İşleri Müdürlüğü">Temizlik İşleri Müdürlüğü</option>
+        <option value="Etüt Proje Müdürlüğü">Etüt Proje Müdürlüğü</option>
+        <option value="Hukuk İşleri Müdürlüğü">Hukuk İşleri Müdürlüğü</option>
+        <option value="İmar ve Şehircilik Müdürlüğü">İmar ve Şehircilik Müdürlüğü</option>
+        <option value="İnsan Kaynak.ve Eğt.Müdürlüğü">İnsan Kaynak.ve Eğt.Müdürlüğü</option>
+        <option value="İşletme iştirakler Müdürlüğü">İşletme İştirakler Müdürlüğü</option>
+        <option value="İtfaiye Müdürlüğü">İtfaiye Müdürlüğü</option>
+        <option value="Kadın ve Aile Hizmetleri Müdürülüğü">Kadın ve Aile Hizmetleri Müdürlüğü</option>
+        <option value="Kültür ve Sosyal işl.Müdürlüğü">Kültür ve Sosyal İşler Müdürlüğü</option>
+        <option value="Makine İkmal,Bakım ve Onr.Md.lüğü">Makine İkmal, Bakım ve Onarım Md.lüğü</option>
+        <option value="Mali Hizmetler Müdürlüğü">Mali Hizmetler Müdürlüğü</option>
+        <option value="Mezarlıklar Müdürlüğü">Mezarlıklar Müdürlüğü</option>
+        <option value="Muhtarlık İşleri Müdürlüğü">Muhtarlık İşleri Müdürlüğü</option>
+        <option value="Özel Kalem Müdürlüğü">Özel Kalem Müdürlüğü</option>
+        <option value="Park-Bahçeler Müdürlüğü">Park-Bahçeler Müdürlüğü</option>
+        <option value="Sağlık İşleri Müdürlüğü">Sağlık İşleri Müdürlüğü</option>
+        <option value="Sosyal Yardım işleri müdürlüğü">Sosyal Yardım İşleri Müdürlüğü</option>
+        <option value="Su ve Kanalizasyon Müdürlüğü">Su ve Kanalizasyon Müdürlüğü</option>
+        <option value="Ulaşım Hizmetleri Müdürlüğü">Ulaşım Hizmetleri Müdürlüğü</option>
+        <option value="Yapı Kontrol Müdürlüğü">Yapı Kontrol Müdürlüğü</option>
+        <option value="Yazı İşleri Müdürlüğü">Yazı İşleri Müdürlüğü</option>
+        <option value="Spor İşleri Müdürlüğü">Spor İşleri Müdürlüğü</option>
+        <option value="Zabıta Müdürlüğü">Zabıta Müdürlüğü</option>
+        <option value="Çevre Koruma ve Kontrol Müdürlüğü">Çevre Koruma ve Kontrol Müdürlüğü</option>
+        <option value="Veteriner İşleri Müdürlüğü">Veteriner İşleri Müdürlüğü</option>
+        <option value="Fen İşleri Müdürlüğü">Fen İşleri Müdürlüğü</option>
+        <option value="Konukevi Müdürlüğü">Konukevi Müdürlüğü</option>
+        <option value="Bilgi İşlem Müdürlüğü">Bilgi İşlem Müdürlüğü</option>
+        <option value="Kentsel Dönüşüm Müdürlüğü">Kentsel Dönüşüm Müdürlüğü</option>
+        <option value="Afet İşleri Müdürlüğü">Afet İşleri Müdürlüğü</option>
+    </select>
+    <span class="text-danger" asp-validation-for="Description"></span>
+</div>
 
-                    <div class="form-group">
-                        <label asp-for="Description"></label>
-                        <input class="form-control" asp-for="Description" />
-                        <span class="text-danger" asp-validation-for="Description"></span>
-                    </div>
+                  
                     <div class="form-group">
                         <label asp-for="IpNo"></label>
                         <input class="form-control" asp-for="IpNo" id="IpNo"
@@ -77,4 +112,16 @@
     </div>
 </div>
 
+<!-- Select2 JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Select2'yi etkinleştir
+        $('#Birimler').select2({
+            placeholder: "Bir veya daha fazla birim seçin", // Placeholder
+            allowClear: true // Seçimi temizleme özelliği
+        });
+    });
+</script>
 

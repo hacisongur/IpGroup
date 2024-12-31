@@ -34,9 +34,8 @@
                         <th>Aktif Mi?</th>
                         <th>Silinmiş Mi?</th>
                         <th>Oluşturulma Tarihi</th>
-                        <th>Oluşturan Kişi</th>
                         <th>Son Düzenlenme Tarihi</th>
-                        <th> Düzenleyen Kişi</th>
+                        <th>Oluşturan Kişi</th>
                         <th>İşlemler</th>
                     </tr>
                     </thead>
@@ -55,9 +54,8 @@
                                 <td>@(category.IsActive ? "Evet" : "Hayır")</td>
                                 <td>@(category.IsDeleted ? "Evet" : "Hayır")</td>
                                 <td>@category.CreatedDate.ToShortDateString()</td>
-                                <td>@category.CreatedByName</td>
                                 <td>@category.ModifiedDate.ToShortDateString()</td>
-                                <td>@category.ModifiedByName</td>
+                                <td>@category.CreatedByName</td>
                             <td>
                                 <button class="btn btn-primary btn-sm btn-update" data-id="@category.Id"><span class="fas fa-edit"></span></button>
                                 <button class="btn btn-danger btn-sm btn-delete" data-id="@category.Id"><span class="fas fa-minus-circle"></span></button>

@@ -186,7 +186,7 @@
             const categoryName = tableRow.find('td:eq(1)').text();
             Swal.fire({
                 title: 'Silmek istediğinize emin misiniz?',
-                text: `${categoryName} adlı kategori silinicektir!`,
+                text: `${categoryName} adlı İp silinicektir!`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -205,7 +205,7 @@
                             if (categoryDto.ResultStatus === 0) {
                                 Swal.fire(
                                     'Silindi!',
-                                    `${categoryDto.Category.Name} adlı kategori başarıyla silinmiştir.`,
+                                    `${categoryDto.Category.Name} adlı İp başarıyla silinmiştir.`,
                                     'success'
                                 );
 

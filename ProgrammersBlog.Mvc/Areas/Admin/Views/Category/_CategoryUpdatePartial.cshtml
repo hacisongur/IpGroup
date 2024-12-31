@@ -24,7 +24,50 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="Description"></label>
-                        <input class="form-control" asp-for="Description" />
+                        @{
+                            var descriptions = new List<string> {
+                        "Destek Hizmetleri Md.lüğü",
+                        "Basın,Yayın ve Halkla İlişkiler Md.lüğü",
+                        "Temizlik İşleri Müdürlüğü",
+                        "Etüt Proje Müdürlüğü",
+                        "Hukuk İşleri Müdürlüğü",
+                        "İmar ve Şehircilik Müdürlüğü",
+                        "İnsan Kaynak.ve Eğt.Müdürlüğü",
+                        "İşletme iştirakler Müdürlüğü",
+                        "İtfaiye Müdürlüğü",
+                        "Kadın ve Aile Hizmetleri Müdürülüğü",
+                        "Kültür ve Sosyal İşler Müdürlüğü",
+                        "Makine İkmal,Bakım ve Onr.Md.lüğü",
+                        "Mali Hizmetler Müdürlüğü",
+                        "Mezarlıklar Müdürlüğü",
+                        "Muhtarlık İşleri Müdürlüğü",
+                        "Özel Kalem Müdürlüğü",
+                        "Park-Bahçeler Müdürlüğü",
+                        "Sağlık İşleri Müdürlüğü",
+                        "Sosyal Yardım İşleri Müdürlüğü",
+                        "Su ve Kanalizasyon Müdürlüğü",
+                        "Ulaşım Hizmetleri Müdürlüğü",
+                        "Yapı Kontrol Müdürlüğü",
+                        "Yazı İşleri Müdürlüğü",
+                        "Spor İşleri Müdürlüğü",
+                        "Zabıta Müdürlüğü",
+                        "Çevre Koruma ve Kontrol Müdürlüğü",
+                        "Veteriner İşleri Müdürlüğü",
+                        "Fen İşleri Müdürlüğü",
+                        "Konukevi Müdürlüğü",
+                        "Bilgi İşlem Müdürlüğü",
+                        "Kentsel Dönüşüm Müdürlüğü",
+                        "Afet İşleri Müdürlüğü"
+                        };
+                        }
+
+                        <select class="form-control" id="Description" name="Description">
+                            <option value="">Seçiniz...</option>
+                            @foreach (var description in descriptions)
+                            {
+                                <option value="@description" selected="@(Model.Description == description ? "selected" : null)">@description</option>
+                            }
+                        </select>
                         <span class="text-danger" asp-validation-for="Description"></span>
                     </div>
                     <div class="form-group">
@@ -87,4 +130,76 @@
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).ready(function () {
+        $('#btnUpdate').click(function () {
+            const isDeleted = $('#IsDeleted').is(':checked'); // IsDeleted checkbox'ının durumu
+            const categoryId = $('input[name="Id"]').val(); // Güncellenen kategori Id'si
+            const hardDeleteUrl = '/Admin/Category/HardDelete'; // HardDelete API URL'si
+            const updateUrl = '/Admin/Category/Update'; // Update API URL'si
+
+            if (isDeleted) {
+                // IsDeleted seçili ise HardDelete işlemi başlatılır
+                $.ajax({
+                    type: 'POST',
+                    url: hardDeleteUrl,
+                    data: { categoryId: categoryId },
+                    success: function (response) {
+                        if (response.success) {
+                            // Başarılı bir şekilde silme işlemi gerçekleşti
+                            Swal.fire({
+                                title: 'Başarılı!',
+                                text: 'Veritabanında silme işlemi başarılı bir şekilde gerçekleşti.',
+                                icon: 'success',
+                                confirmButtonText: 'Tamam'
+                            }).then(() => {
+                                location.reload(); // Sayfayı yeniden yükle
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Hata!',
+                                text: 'Silme işlemi başarısız: ' + response.message,
+                                icon: 'error',
+                                confirmButtonText: 'Tamam'
+                            });
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            title: 'Hata!',
+                            text: 'Silme işlemi sırasında bir hata oluştu.',
+                            icon: 'error',
+                            confirmButtonText: 'Tamam'
+                        });
+                    }
+                });
+            } else {
+                const formData = $('#form-category-update').serialize(); // Form verilerini al
+                $.ajax({
+                    type: 'POST',
+                    url: updateUrl,
+                    data: formData,
+                    success: function (response) {
+                        Swal.fire({
+                            title: 'Başarılı!',
+                            text: 'Güncelleme işlemi başarılı bir şekilde tamamlandı.',
+                            icon: 'success',
+                            confirmButtonText: 'Tamam'
+                        });
+                    },
+                    error: function () {
+                        Swal.fire({
+                            title: 'Hata!',
+                            text: 'Güncelleme işlemi sırasında bir hata oluştu.',
+                            icon: 'error',
+                            confirmButtonText: 'Tamam'
+                        });
+                    }
+                });
+            }
+        });
+    });
+</script>
+
 
